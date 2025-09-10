@@ -61,7 +61,7 @@ const Header = ({ activeSection, setActiveSection, selectedCourse, onCourseSelec
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-8">
             {activeSection === 'course-detail' ? (
               // Course navigation for course detail page
               <>
@@ -141,7 +141,7 @@ const Header = ({ activeSection, setActiveSection, selectedCourse, onCourseSelec
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4">
           {/* Language Selector */}
             <div className="relative">
               <button
@@ -193,13 +193,16 @@ const Header = ({ activeSection, setActiveSection, selectedCourse, onCourseSelec
           </div>
 
           {/* Mobile actions: quick language + menu */}
-          <div className="md:hidden flex items-center space-x-2 relative">
+          <div className="lg:hidden flex items-center space-x-2 relative">
             <button
               aria-label="Change language"
               onClick={() => setIsLangOpen((v) => !v)}
-              className="p-2 rounded-lg text-gray-600 hover:text-blue-800 hover:bg-gray-100 transition-colors"
+              className="flex items-center px-3 py-2 rounded-lg text-gray-600 hover:text-blue-800 hover:bg-gray-100 transition-colors"
             >
-              <Globe className="h-5 w-5" />
+              <Globe className="h-4 w-4 mr-2" />
+              <span className="text-xs font-medium">
+                {languages.find(lang => lang.code === language)?.code.toUpperCase() || 'EN'}
+              </span>
             </button>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -233,7 +236,7 @@ const Header = ({ activeSection, setActiveSection, selectedCourse, onCourseSelec
 
         {/* Enhanced Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 py-6 bg-white/95 backdrop-blur-md">
+          <div className="lg:hidden border-t border-gray-200 py-6 bg-white/95 backdrop-blur-md">
             <nav className="space-y-3 mb-6">
               {activeSection === 'course-detail' ? (
                 // Course navigation for course detail page

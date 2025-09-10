@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Clock, BookOpen, Award, Users, Plane, Globe, Shield, Heart, CheckCircle, MapPin, Phone, Mail, X } from 'lucide-react';
+import { Clock, BookOpen, Award, Users, Plane, Globe, Shield, Heart, CheckCircle, MapPin, Phone, Mail, X } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 interface CourseDetailProps {
   courseId: string;
   onBack: () => void;
+  onCourseSelect?: (courseId: string) => void;
 }
 
-const CourseDetail = ({ courseId, onBack }: CourseDetailProps) => {
+const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) => {
   const { t, language, setLanguage } = useLanguage();
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   
@@ -95,7 +96,7 @@ const CourseDetail = ({ courseId, onBack }: CourseDetailProps) => {
       formData.append('language', language); // 根据当前语言设置
       
       // 添加附件
-      attachments.forEach((file, index) => {
+      attachments.forEach((file) => {
         formData.append('attachments', file);
       });
       
@@ -421,106 +422,138 @@ const CourseDetail = ({ courseId, onBack }: CourseDetailProps) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button
-            onClick={onBack}
-            className="inline-flex items-center text-blue-800 hover:text-blue-900 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5 mr-2" />
-            {t('courseDetail.backToCourses')}
-          </button>
+
+      {/* Mobile Course Switcher - Clean design */}
+      <div className="lg:hidden bg-white border-b border-gray-100 pt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <div className="flex justify-center space-x-2">
+            {['advanced', 'english', 'basic'].map((id) => (
+              <button
+                key={id}
+                onClick={() => onCourseSelect?.(id)}
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                  courseId === id
+                    ? 'bg-blue-800 text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {t(`courses.${id}.title`).split(' ')[0]}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
         {/* Course Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 lg:mb-12">
           <div className="inline-flex items-center bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
             <Award className="h-4 w-4 mr-2" />
             {t('courseDetail.iataCertified')}
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {course.title}
           </h1>
-          <p className="text-xl text-gray-600 mb-6">
+          <p className="text-lg sm:text-xl text-gray-600 mb-6">
             {course.subtitle}
           </p>
-                      <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
-              <div className="flex items-center">
-                <Clock className="h-4 w-4 mr-2" />
-                {t('courseDetail.duration')}: {course.duration}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-gray-600 max-w-2xl mx-auto">
+              <div className="flex items-center justify-center sm:justify-start">
+                <Clock className="h-4 w-4 mr-4 sm:mr-3 flex-shrink-0" />
+                <div className="text-center sm:text-left">
+                  <div className="font-medium text-gray-900">{t('courseDetail.duration')}</div>
+                  <div className="text-gray-600">{course.duration}</div>
+                </div>
               </div>
-              <div className="flex items-center">
-                <BookOpen className="h-4 w-4 mr-2" />
-                {t('courseDetail.study')}: {course.studyWeek}
+              <div className="flex items-center justify-center sm:justify-start">
+                <BookOpen className="h-4 w-4 mr-4 sm:mr-3 flex-shrink-0" />
+                <div className="text-center sm:text-left">
+                  <div className="font-medium text-gray-900">{t('courseDetail.study')}</div>
+                  <div className="text-gray-600">{course.studyWeek}</div>
+                </div>
               </div>
-              <div className="flex items-center">
-                <Users className="h-4 w-4 mr-2" />
-                {t('courseDetail.intake')}: {course.intake}
+              <div className="flex items-center justify-center sm:justify-start">
+                <Users className="h-4 w-4 mr-4 sm:mr-3 flex-shrink-0" />
+                <div className="text-center sm:text-left">
+                  <div className="font-medium text-gray-900">{t('courseDetail.intake')}</div>
+                  <div className="text-gray-600">{course.intake}</div>
+                </div>
               </div>
             </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-6 lg:space-y-8">
+            {/* Mobile CTA Button - Only visible on mobile */}
+            <div className="lg:hidden bg-gradient-to-r from-blue-800 to-blue-900 rounded-2xl p-6 text-white">
+              <h3 className="text-lg font-semibold mb-4">{t('courseDetail.readyToStart')}</h3>
+              <p className="text-blue-100 text-sm mb-6">
+                {t('courseDetail.joinNextIntake')}
+              </p>
+              <button 
+                onClick={() => setShowApplicationForm(true)}
+                className="w-full bg-white text-blue-800 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                {t('courseDetail.applyNow')}
+              </button>
+            </div>
+
             {/* Overview */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('courseDetail.overview')}</h2>
+            <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+              <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-4">{t('courseDetail.overview')}</h2>
               <p className="text-gray-700 leading-relaxed whitespace-pre-line text-justify">
                 {course.overview}
               </p>
             </div>
 
             {/* Programme Modules */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('courseDetail.programmeModules')}</h2>
+            <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+              <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-6">{t('courseDetail.programmeModules')}</h2>
               
               {/* IATA Modules */}
-              <div className="mb-8">
-                <h3 className="text-xl font-semibold text-blue-800 mb-4 flex items-center">
+              <div className="mb-6 lg:mb-8">
+                <h3 className="text-lg lg:text-xl font-semibold text-blue-800 mb-4 flex items-center">
                   <Award className="h-5 w-5 mr-2" />
                   {t('courseDetail.iataModules')}
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {course.modules.iata?.map((module, index) => (
-                    <div key={index} className="flex items-center">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="text-gray-700">{module}</span>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
+                  {'iata' in course.modules && course.modules.iata?.map((module: string, index: number) => (
+                    <div key={index} className="flex items-start">
+                      <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{module}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Communication Skills */}
-              <div className="mb-8">
-                <h3 className="text-xl font-semibold text-blue-800 mb-4 flex items-center">
+              <div className="mb-6 lg:mb-8">
+                <h3 className="text-lg lg:text-xl font-semibold text-blue-800 mb-4 flex items-center">
                   <Globe className="h-5 w-5 mr-2" />
                   {t('courseDetail.communicationSkills')}
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
                   {course.modules.communication?.map((module, index) => (
-                    <div key={index} className="flex items-center">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="text-gray-700">{module}</span>
+                    <div key={index} className="flex items-start">
+                      <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{module}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Style and Image */}
-              <div className="mb-8">
-                <h3 className="text-xl font-semibold text-blue-800 mb-4 flex items-center">
+              <div className="mb-6 lg:mb-8">
+                <h3 className="text-lg lg:text-xl font-semibold text-blue-800 mb-4 flex items-center">
                   <Heart className="h-5 w-5 mr-2" />
                   {t('courseDetail.styleAndImage')}
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
                   {course.modules.style?.map((module, index) => (
-                    <div key={index} className="flex items-center">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="text-gray-700">{module}</span>
+                    <div key={index} className="flex items-start">
+                      <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{module}</span>
                     </div>
                   ))}
                 </div>
@@ -528,16 +561,16 @@ const CourseDetail = ({ courseId, onBack }: CourseDetailProps) => {
 
               {/* Aircraft Safety */}
               {course.modules.safety && (
-                <div className="mb-8">
-                  <h3 className="text-xl font-semibold text-blue-800 mb-4 flex items-center">
+                <div className="mb-6 lg:mb-8">
+                  <h3 className="text-lg lg:text-xl font-semibold text-blue-800 mb-4 flex items-center">
                     <Shield className="h-5 w-5 mr-2" />
                     {t('courseDetail.aircraftSafety')}
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
                     {course.modules.safety.map((module, index) => (
-                      <div key={index} className="flex items-center">
-                        <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
-                        <span className="text-gray-700">{module}</span>
+                      <div key={index} className="flex items-start">
+                        <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
+                        <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{module}</span>
                       </div>
                     ))}
                   </div>
@@ -545,7 +578,7 @@ const CourseDetail = ({ courseId, onBack }: CourseDetailProps) => {
               )}
 
               {/* Harvard Modules (for Advanced course) */}
-              {course.modules.harvard && (
+              {'harvard' in course.modules && course.modules.harvard && (
                 <div>
                   <h3 className="text-xl font-semibold text-blue-800 mb-4 flex items-center">
                     <Shield className="h-5 w-5 mr-2" />
@@ -555,7 +588,7 @@ const CourseDetail = ({ courseId, onBack }: CourseDetailProps) => {
                     {t('courseDetail.harvardDescription')}
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {course.modules.harvard.map((module, index) => (
+                    {course.modules.harvard.map((module: string, index: number) => (
                       <div key={index} className="flex items-center">
                         <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
                         <span className="text-gray-700">{module}</span>
@@ -566,14 +599,14 @@ const CourseDetail = ({ courseId, onBack }: CourseDetailProps) => {
               )}
 
               {/* Basic Modules (for Basic course) */}
-              {course.modules.basic && (
+              {'basic' in course.modules && course.modules.basic && (
                 <div>
                   <h3 className="text-xl font-semibold text-blue-800 mb-4 flex items-center">
                     <Shield className="h-5 w-5 mr-2" />
                     {t('courseDetail.basicModules')}
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {course.modules.basic.map((module, index) => (
+                    {course.modules.basic.map((module: string, index: number) => (
                       <div key={index} className="flex items-center">
                         <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
                         <span className="text-gray-700">{module}</span>
@@ -585,8 +618,8 @@ const CourseDetail = ({ courseId, onBack }: CourseDetailProps) => {
             </div>
 
             {/* Entry Requirements */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('courseDetail.entryRequirements')}</h2>
+            <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+              <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-6">{t('courseDetail.entryRequirements')}</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
@@ -616,26 +649,26 @@ const CourseDetail = ({ courseId, onBack }: CourseDetailProps) => {
             </div>
 
             {/* Career Opportunities */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('courseDetail.careerOpportunities')}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+              <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-6">{t('courseDetail.careerOpportunities')}</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 {course.career.map((career, index) => (
-                  <div key={index} className="flex items-center">
-                    <Plane className="h-4 w-4 text-blue-500 mr-3 flex-shrink-0" />
-                    <span className="text-gray-700 text-sm">{career}</span>
+                  <div key={index} className="flex items-start">
+                    <Plane className="h-4 w-4 text-blue-500 mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{career}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Perks */}
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('courseDetail.perks')}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+              <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-6">{t('courseDetail.perks')}</h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 {course.perks.map((perk, index) => (
-                  <div key={index} className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
-                    <span className="text-gray-700 text-sm">{perk}</span>
+                  <div key={index} className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{perk}</span>
                   </div>
                 ))}
               </div>
@@ -644,28 +677,10 @@ const CourseDetail = ({ courseId, onBack }: CourseDetailProps) => {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Quick Info */}
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('courseDetail.quickInfo')}</h3>
-              <div className="space-y-3">
-                <div className="flex items-center">
-                  <Clock className="h-4 w-4 text-blue-500 mr-3" />
-                  <span className="text-sm text-gray-700">{t('courseDetail.duration')}: {course.duration}</span>
-                </div>
-                <div className="flex items-center">
-                  <BookOpen className="h-4 w-4 text-blue-500 mr-3" />
-                  <span className="text-sm text-gray-700">{t('courseDetail.study')}: {course.studyWeek}</span>
-                </div>
-                <div className="flex items-center">
-                  <Users className="h-4 w-4 text-blue-500 mr-3" />
-                  <span className="text-sm text-gray-700">{t('courseDetail.intake')}: {course.intake}</span>
-                </div>
-              </div>
-            </div>
+          <div className="space-y-4 lg:space-y-6">
 
             {/* Contact Info */}
-            <div className="bg-white rounded-2xl shadow-lg p-6">
+            <div className="bg-white rounded-2xl shadow-lg p-5 lg:p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('courseDetail.contactInfo')}</h3>
               <div className="space-y-3">
                 <div className="flex items-center">
@@ -683,19 +698,6 @@ const CourseDetail = ({ courseId, onBack }: CourseDetailProps) => {
               </div>
             </div>
 
-            {/* CTA Button */}
-            <div className="bg-gradient-to-r from-blue-800 to-blue-900 rounded-2xl p-6 text-white">
-              <h3 className="text-lg font-semibold mb-4">{t('courseDetail.readyToStart')}</h3>
-              <p className="text-blue-100 text-sm mb-6">
-                {t('courseDetail.joinNextIntake')}
-              </p>
-              <button 
-                onClick={() => setShowApplicationForm(true)}
-                className="w-full bg-white text-blue-800 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors"
-              >
-                {t('courseDetail.applyNow')}
-              </button>
-            </div>
           </div>
         </div>
       </div>

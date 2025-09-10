@@ -33,8 +33,8 @@ const Logo: React.FC<LogoProps> = ({
       
       {/* Company Name - Always visible and prominent */}
       <div className="ml-4">
-        <div className="text-2xl font-bold text-gray-900 tracking-wide leading-tight">VALENTIA</div>
-        <div className="text-sm text-gray-600 font-medium tracking-wider leading-tight">CABIN CREW ACADEMY</div>
+        <div className="text-lg sm:text-2xl font-bold text-gray-900 tracking-wide leading-tight">VALENTIA</div>
+        <div className="text-xs sm:text-sm text-gray-600 font-medium tracking-wider leading-tight">CABIN CREW ACADEMY</div>
       </div>
     </div>
   );

@@ -4,9 +4,10 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 interface HeroProps {
   onExploreCourses?: () => void;
+  onCourseSelect?: (courseId: string) => void;
 }
 
-const Hero = ({ onExploreCourses }: HeroProps) => {
+const Hero = ({ onCourseSelect }: HeroProps) => {
   const { t, language } = useLanguage();
 
   // Handle middle mouse button click for opening in new tab
@@ -24,38 +25,46 @@ const Hero = ({ onExploreCourses }: HeroProps) => {
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent transform -skew-y-6"></div>
       </div>
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-24 md:py-28 lg:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
           {/* Left Content */}
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <div className="inline-flex items-center bg-gold-500/10 border border-gold-500/20 rounded-full px-4 py-2">
-                <Star className="h-4 w-4 text-yellow-400 mr-2" />
-                <span className="text-sm font-medium text-yellow-300">{t('hero.premier')}</span>
+          <div className="space-y-6 sm:space-y-6 lg:space-y-8">
+            <div className="space-y-6 sm:space-y-4">
+              {/* Mobile: Two badges, Desktop: Single badge */}
+              <div className="flex flex-col sm:block gap-3">
+                <div className="inline-flex items-center bg-gold-500/10 border border-gold-500/20 rounded-full px-5 py-3 sm:px-4 sm:py-2">
+                  <Star className="h-5 w-5 sm:h-4 sm:w-4 text-yellow-400 mr-2" />
+                  <span className="text-base sm:text-sm font-medium text-yellow-300">{t('hero.premier')}</span>
+                </div>
+                {/* IATA badge - only visible on mobile */}
+                <div className="sm:hidden inline-flex items-center bg-white/10 border border-white/30 rounded-full px-5 py-3">
+                  <Award className="h-5 w-5 text-white mr-2" />
+                  <span className="text-base font-medium text-white">{t('hero.iata.title')}</span>
+                </div>
               </div>
               
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold leading-tight">
                 <span className="bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
                   {t('hero.title')}
                 </span>
               </h1>
               
-              <p className="text-xl md:text-2xl font-light text-blue-100">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-blue-100">
                 {t('hero.subtitle')}
               </p>
               
-              <p className="text-lg text-blue-200 leading-relaxed max-w-xl sm:leading-8">
+              <p className="text-sm sm:text-base md:text-lg text-blue-200 leading-relaxed max-w-xl sm:leading-8">
                 {t('hero.description')}
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
-                onClick={onExploreCourses}
+                onClick={() => onCourseSelect?.('advanced')}
                 onMouseDown={(e) => handleMiddleClick(e, () => {
                   const currentUrl = window.location.origin;
-                  const coursesUrl = `${currentUrl}/#courses?lang=${language}`;
-                  window.open(coursesUrl, '_blank');
+                  const courseDetailUrl = `${currentUrl}/course/advanced?lang=${language}`;
+                  window.open(courseDetailUrl, '_blank');
                 })}
                 className="inline-flex items-center bg-yellow-500 hover:bg-yellow-400 text-black font-semibold px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer"
               >
@@ -65,27 +74,27 @@ const Hero = ({ onExploreCourses }: HeroProps) => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 pt-8 border-t border-blue-700/50">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8 pt-4 sm:pt-6 lg:pt-8 border-t border-blue-700/50">
               <div className="text-center">
-                <div className="flex items-center justify-center mb-2">
-                  <Award className="h-6 w-6 text-yellow-400" />
+                <div className="flex items-center justify-center mb-1 sm:mb-2">
+                  <Award className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-yellow-400" />
                 </div>
-                <div className="text-2xl font-bold">500+</div>
-                <div className="text-sm text-blue-200">{t('hero.stats.graduates')}</div>
+                <div className="text-lg sm:text-xl md:text-2xl font-bold">500+</div>
+                <div className="text-xs sm:text-sm text-blue-200 leading-tight">{t('hero.stats.graduates')}</div>
               </div>
               <div className="text-center">
-                <div className="flex items-center justify-center mb-2">
-                  <Users className="h-6 w-6 text-yellow-400" />
+                <div className="flex items-center justify-center mb-1 sm:mb-2">
+                  <Users className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-yellow-400" />
                 </div>
-                <div className="text-2xl font-bold">95%</div>
-                <div className="text-sm text-blue-200">{t('hero.stats.crewPlacement')}</div>
+                <div className="text-lg sm:text-xl md:text-2xl font-bold">95%</div>
+                <div className="text-xs sm:text-sm text-blue-200 leading-tight">{t('hero.stats.crewPlacement')}</div>
               </div>
               <div className="text-center">
-                <div className="flex items-center justify-center mb-2">
-                  <Star className="h-6 w-6 text-yellow-400" />
+                <div className="flex items-center justify-center mb-1 sm:mb-2">
+                  <Star className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-yellow-400" />
                 </div>
-                <div className="text-2xl font-bold">4.9/5</div>
-                <div className="text-sm text-blue-200">{t('hero.stats.studentRating')}</div>
+                <div className="text-lg sm:text-xl md:text-2xl font-bold">4.9/5</div>
+                <div className="text-xs sm:text-sm text-blue-200 leading-tight">{t('hero.stats.studentRating')}</div>
               </div>
             </div>
           </div>

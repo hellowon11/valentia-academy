@@ -181,7 +181,7 @@ function App() {
         
         {activeSection === 'home' && (
           <>
-            <Hero onExploreCourses={() => handleSectionChange('courses')} />
+            <Hero onExploreCourses={() => handleSectionChange('courses')} onCourseSelect={handleCourseSelect} />
                           <Courses isStandalone={false} />
               <AboutUs isStandalone={false} />
             <TeamMembers isStandalone={false} />
@@ -194,7 +194,7 @@ function App() {
         {activeSection === 'team' && <TeamMembers isStandalone={true} />}
         {activeSection === 'contact' && <Contact />}
         {activeSection === 'course-detail' && selectedCourse && (
-          <CourseDetail courseId={selectedCourse} onBack={handleBackToCourses} />
+          <CourseDetail courseId={selectedCourse} onBack={handleBackToCourses} onCourseSelect={handleCourseSelect} />
         )}
         
         <Footer />
