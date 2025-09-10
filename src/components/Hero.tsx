@@ -29,36 +29,36 @@ const Hero = ({ onCourseSelect }: HeroProps) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-6 sm:space-y-6 lg:space-y-8">
-            <div className="space-y-6 sm:space-y-4">
-              {/* Mobile: Two badges, Desktop: Single badge */}
-              <div className="flex flex-col sm:block gap-3">
-                <div className="inline-flex items-center bg-gold-500/10 border border-gold-500/20 rounded-full px-5 py-3 sm:px-4 sm:py-2">
-                  <Star className="h-5 w-5 sm:h-4 sm:w-4 text-yellow-400 mr-2" />
-                  <span className="text-base sm:text-sm font-medium text-yellow-300">{t('hero.premier')}</span>
+            <div className="space-y-8 sm:space-y-4">
+              {/* Mobile: Two badges side by side, Desktop: Single badge */}
+              <div className="flex flex-row sm:block gap-4 sm:gap-0">
+                <div className="inline-flex items-center sm:bg-gold-500/10 sm:border sm:border-gold-500/20 sm:rounded-full sm:px-4 sm:py-2">
+                  <Star className="h-4 w-4 sm:h-4 sm:w-4 text-yellow-400 mr-2" />
+                  <span className="text-sm sm:text-sm font-medium text-yellow-300">{t('hero.premier')}</span>
                 </div>
-                {/* IATA badge - only visible on mobile */}
-                <div className="sm:hidden inline-flex items-center bg-white/10 border border-white/30 rounded-full px-5 py-3">
-                  <Award className="h-5 w-5 text-white mr-2" />
-                  <span className="text-base font-medium text-white">{t('hero.iata.title')}</span>
+                {/* IATA badge - only visible on mobile, no background/border */}
+                <div className="sm:hidden inline-flex items-center">
+                  <Award className="h-4 w-4 text-white mr-2" />
+                  <span className="text-sm font-medium text-white">{t('hero.iata.title')}</span>
                 </div>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold leading-tight">
+              <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-6xl font-bold leading-tight">
                 <span className="bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
                   {t('hero.title')}
                 </span>
               </h1>
               
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-blue-100">
+              <p className="text-lg sm:text-lg md:text-xl lg:text-2xl font-light text-blue-100">
                 {t('hero.subtitle')}
               </p>
               
-              <p className="text-sm sm:text-base md:text-lg text-blue-200 leading-relaxed max-w-xl sm:leading-8">
+              <p className="text-base sm:text-base md:text-lg text-blue-200 leading-relaxed max-w-xl sm:leading-8">
                 {t('hero.description')}
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-4">
               <button 
                 onClick={() => onCourseSelect?.('advanced')}
                 onMouseDown={(e) => handleMiddleClick(e, () => {
@@ -74,7 +74,7 @@ const Hero = ({ onCourseSelect }: HeroProps) => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8 pt-4 sm:pt-6 lg:pt-8 border-t border-blue-700/50">
+            <div className="grid grid-cols-3 gap-4 sm:gap-4 md:gap-6 lg:gap-8 pt-6 sm:pt-6 lg:pt-8 border-t border-blue-700/50">
               <div className="text-center">
                 <div className="flex items-center justify-center mb-1 sm:mb-2">
                   <Award className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-yellow-400" />
