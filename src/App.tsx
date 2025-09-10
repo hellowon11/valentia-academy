@@ -140,6 +140,15 @@ function App() {
     setShowPlaneAnimation(false);
   };
 
+  const handleCourseSelect = (courseId: string) => {
+    setSelectedCourse(courseId);
+    setActiveSection('course-detail');
+    // Update URL
+    const currentUrl = window.location.origin;
+    const courseDetailUrl = `${currentUrl}/course/${courseId}?lang=${new URLSearchParams(window.location.search).get('lang') || 'en'}`;
+    window.history.pushState({}, '', courseDetailUrl);
+  };
+
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
     setSelectedCourse(null);
@@ -167,6 +176,7 @@ function App() {
           activeSection={activeSection} 
           setActiveSection={handleSectionChange} 
           selectedCourse={selectedCourse}
+          onCourseSelect={handleCourseSelect}
         />
         
         {activeSection === 'home' && (

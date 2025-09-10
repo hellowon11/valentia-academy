@@ -170,13 +170,13 @@ const Courses = ({ isStandalone = false }: CoursesProps) => {
                     onClick={prevCourse}
                     className="bg-white/95 hover:bg-white p-2 sm:p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 backdrop-blur-sm transform -translate-x-2 sm:-translate-x-4 hover:shadow-blue-200/50"
                   >
-                    <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6 text-gray-800" />
+                    <ChevronLeft className="h-3 w-3 sm:h-4 sm:w-4 text-gray-800" />
                   </button>
                   <button
                     onClick={nextCourse}
                     className="bg-white/95 hover:bg-white p-2 sm:p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 backdrop-blur-sm transform translate-x-2 sm:translate-x-4 hover:shadow-blue-200/50"
                   >
-                    <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6 text-gray-800" />
+                    <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4 text-gray-800" />
                   </button>
                 </div>
                 
