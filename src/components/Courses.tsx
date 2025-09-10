@@ -78,13 +78,13 @@ const Courses = ({ isStandalone = false }: CoursesProps) => {
 
   return (
     <section className={`bg-white ${isStandalone ? 'pt-20 sm:pt-24 pb-6 sm:pb-8' : 'pt-8 sm:pt-12 pb-2'}`}>
-      <div className="max-w-6xl mx-auto px-3 sm:px-4 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Compact Header */}
         <div className={`text-center ${isStandalone ? 'mb-8 sm:mb-12' : 'mb-4 sm:mb-6'}`}>
-          <h2 className={`font-bold text-gray-900 mb-2 sm:mb-3 ${isStandalone ? 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl' : 'text-2xl sm:text-3xl md:text-4xl'}`}>
+          <h2 className={`font-bold text-gray-900 mb-6 ${isStandalone ? 'text-5xl md:text-6xl' : 'text-4xl md:text-5xl'}`}>
             {t('courses.title')}
           </h2>
-          <p className={`text-gray-600 max-w-2xl mx-auto text-sm sm:text-base ${isStandalone ? 'text-lg sm:text-xl' : 'text-base sm:text-lg'}`}>
+          <p className={`text-gray-600 max-w-3xl mx-auto ${isStandalone ? 'text-xl md:text-2xl' : 'text-xl'}`}>
             {t('courses.subtitle')}
           </p>
         </div>
