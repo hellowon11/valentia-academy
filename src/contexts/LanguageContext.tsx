@@ -1170,6 +1170,15 @@ const translations = {
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState<Language>('en');
 
+  // Initialize language from URL parameter on component mount
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const langParam = urlParams.get('lang');
+    if (langParam && ['en', 'zh', 'ko', 'ja'].includes(langParam)) {
+      setLanguage(langParam as Language);
+    }
+  }, []);
+
   const t = (key: string): string => {
     return (translations[language] as any)[key] || key;
   };

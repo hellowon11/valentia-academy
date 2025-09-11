@@ -9,17 +9,10 @@ interface CourseDetailProps {
 }
 
 const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) => {
-  const { t, language, setLanguage } = useLanguage();
+  const { t, language } = useLanguage();
   const [showApplicationForm, setShowApplicationForm] = useState(false);
   
-  // 读取URL参数并设置语言
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const langParam = urlParams.get('lang');
-    if (langParam && ['en', 'zh', 'ko', 'ja'].includes(langParam)) {
-      setLanguage(langParam as any);
-    }
-  }, [setLanguage]);
+  // Language is now handled by LanguageContext automatically
 
   // 页面刷新时滚动到顶部
   useEffect(() => {

@@ -143,10 +143,13 @@ function App() {
   const handleCourseSelect = (courseId: string) => {
     setSelectedCourse(courseId);
     setActiveSection('course-detail');
-    // Update URL
+    // Update URL with current language parameter
     const currentUrl = window.location.origin;
-    const courseDetailUrl = `${currentUrl}/course/${courseId}?lang=${new URLSearchParams(window.location.search).get('lang') || 'en'}`;
+    const currentLang = new URLSearchParams(window.location.search).get('lang') || 'en';
+    const courseDetailUrl = `${currentUrl}/course/${courseId}?lang=${currentLang}`;
     window.history.pushState({}, '', courseDetailUrl);
+    // Scroll to top when navigating to course detail
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSectionChange = (section: string) => {
