@@ -670,10 +670,12 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-4 lg:space-y-6">
+          <div className="space-y-6 lg:space-y-8">
+            {/* Hidden placeholder to align with mobile CTA button in main content */}
+            <div className="lg:hidden"></div>
 
             {/* Contact Info */}
-            <div className="bg-white rounded-2xl shadow-lg p-5 lg:p-6">
+            <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('courseDetail.contactInfo')}</h3>
               <div className="space-y-3">
                 <div className="flex items-center">
@@ -689,6 +691,20 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
                   <span className="text-sm text-gray-700">valentiacabincrew.academy@gmail.com</span>
                 </div>
               </div>
+            </div>
+
+            {/* Desktop Apply Now Button - Only visible on desktop */}
+            <div className="hidden lg:block bg-gradient-to-r from-blue-800 to-blue-900 rounded-2xl p-5 text-white">
+              <h3 className="text-lg font-semibold mb-3">{t('courseDetail.readyToStart')}</h3>
+              <p className="text-blue-100 text-sm mb-4">
+                {t('courseDetail.joinNextIntake')}
+              </p>
+              <button 
+                onClick={() => setShowApplicationForm(true)}
+                className="w-full bg-white text-blue-800 font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                {t('courseDetail.applyNow')}
+              </button>
             </div>
 
           </div>
