@@ -242,61 +242,45 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
       studyWeek: t('courseDetail.studyWeek'),
       intake: t('courseDetail.intakeMonths'),
       overview: t('courses.english.overview'),
-              modules: {
-          iata: [
-            t('courses.advanced.modules.iata.1'),
-            t('courses.advanced.modules.iata.2'),
-            t('courses.advanced.modules.iata.3'),
-            t('courses.advanced.modules.iata.4'),
-            t('courses.advanced.modules.iata.5'),
-            t('courses.advanced.modules.iata.6'),
-            t('courses.advanced.modules.iata.7'),
-            t('courses.advanced.modules.iata.8')
-          ],
-          communication: [
-            t('courses.advanced.modules.communication.1'),
-            t('courses.advanced.modules.communication.2'),
-            t('courses.advanced.modules.communication.3')
-          ],
-          style: [
-            t('courses.advanced.modules.style.1'),
-            t('courses.advanced.modules.style.2'),
-            t('courses.advanced.modules.style.3'),
-            t('courses.advanced.modules.style.4')
-          ],
-          safety: [
-            t('courses.advanced.modules.safety.1'),
-            t('courses.advanced.modules.safety.2'),
-            t('courses.advanced.modules.safety.3'),
-            t('courses.advanced.modules.safety.4'),
-            t('courses.advanced.modules.safety.5'),
-            t('courses.advanced.modules.safety.6')
-          ]
-        },
+      modules: {
+        aviation: [
+          t('courses.english.modules.aviation.1'),
+          t('courses.english.modules.aviation.2'),
+          t('courses.english.modules.aviation.3'),
+          t('courses.english.modules.aviation.4')
+        ],
+        communication: [
+          t('courses.english.modules.communication.1'),
+          t('courses.english.modules.communication.2'),
+          t('courses.english.modules.communication.3'),
+          t('courses.english.modules.communication.4')
+        ],
+        assessment: [
+          t('courses.english.modules.assessment.1'),
+          t('courses.english.modules.assessment.2'),
+          t('courses.english.modules.assessment.3'),
+          t('courses.english.modules.assessment.4')
+        ]
+      },
       requirements: {
         academic: [
-          t('requirements.academic.1'),
-          t('requirements.academic.2')
-        ],
-        physical: [
-          t('requirements.physical.1'),
-          t('requirements.physical.2')
+          t('requirements.english.academic.1'),
+          t('requirements.english.academic.2')
         ]
       },
       career: [
-        t('career.1'),
-        t('career.2'),
-        t('career.3'),
-        t('career.4'),
-        t('career.5'),
-        t('career.6'),
-        t('career.7'),
-        t('career.8'),
-        t('career.9'),
-        t('career.10'),
-        t('career.11'),
-        t('career.12'),
-        t('career.13')
+        t('career.english.1'),
+        t('career.english.2'),
+        t('career.english.3'),
+        t('career.english.4'),
+        t('career.english.5'),
+        t('career.english.6'),
+        t('career.english.7'),
+        t('career.english.8'),
+        t('career.english.9'),
+        t('career.english.10'),
+        t('career.english.11'),
+        t('career.english.12')
       ],
       perks: [
         t('perks.1'),
@@ -504,21 +488,41 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
             <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
               <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-6">{t('courseDetail.programmeModules')}</h2>
               
-              {/* IATA Modules */}
-              <div className="mb-6 lg:mb-8">
-                <h3 className="text-lg lg:text-xl font-semibold text-blue-800 mb-4 flex items-center">
-                  <Award className="h-5 w-5 mr-2" />
-                  {t('courseDetail.iataModules')}
-                </h3>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
-                  {'iata' in course.modules && course.modules.iata?.map((module: string, index: number) => (
-                    <div key={index} className="flex items-start">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{module}</span>
-                    </div>
-                  ))}
+              {/* IATA Modules (for Advanced course) */}
+              {'iata' in course.modules && course.modules.iata && (
+                <div className="mb-6 lg:mb-8">
+                  <h3 className="text-lg lg:text-xl font-semibold text-blue-800 mb-4 flex items-center">
+                    <Award className="h-5 w-5 mr-2" />
+                    {t('courseDetail.iataModules')}
+                  </h3>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
+                    {course.modules.iata.map((module: string, index: number) => (
+                      <div key={index} className="flex items-start">
+                        <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
+                        <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{module}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* Aviation English Modules (for English course) */}
+              {'aviation' in course.modules && course.modules.aviation && (
+                <div className="mb-6 lg:mb-8">
+                  <h3 className="text-lg lg:text-xl font-semibold text-blue-800 mb-4 flex items-center">
+                    <Award className="h-5 w-5 mr-2" />
+                    {t('courseDetail.aviationEnglish')}
+                  </h3>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
+                    {course.modules.aviation.map((module: string, index: number) => (
+                      <div key={index} className="flex items-start">
+                        <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
+                        <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{module}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Communication Skills */}
               <div className="mb-6 lg:mb-8">
@@ -536,31 +540,51 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
                 </div>
               </div>
 
-              {/* Style and Image */}
-              <div className="mb-6 lg:mb-8">
-                <h3 className="text-lg lg:text-xl font-semibold text-blue-800 mb-4 flex items-center">
-                  <Heart className="h-5 w-5 mr-2" />
-                  {t('courseDetail.styleAndImage')}
-                </h3>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
-                  {course.modules.style?.map((module, index) => (
-                    <div key={index} className="flex items-start">
-                      <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{module}</span>
-                    </div>
-                  ))}
+              {/* Assessment & Certification (for English course) */}
+              {'assessment' in course.modules && course.modules.assessment && (
+                <div className="mb-6 lg:mb-8">
+                  <h3 className="text-lg lg:text-xl font-semibold text-blue-800 mb-4 flex items-center">
+                    <Shield className="h-5 w-5 mr-2" />
+                    {t('courseDetail.assessmentCertification')}
+                  </h3>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
+                    {course.modules.assessment.map((module: string, index: number) => (
+                      <div key={index} className="flex items-start">
+                        <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
+                        <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{module}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              {/* Aircraft Safety */}
-              {course.modules.safety && (
+              {/* Style and Image (for Advanced and Basic courses) */}
+              {'style' in course.modules && course.modules.style && (
+                <div className="mb-6 lg:mb-8">
+                  <h3 className="text-lg lg:text-xl font-semibold text-blue-800 mb-4 flex items-center">
+                    <Heart className="h-5 w-5 mr-2" />
+                    {t('courseDetail.styleAndImage')}
+                  </h3>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
+                    {course.modules.style.map((module: string, index: number) => (
+                      <div key={index} className="flex items-start">
+                        <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
+                        <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{module}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Aircraft Safety (for Advanced and Basic courses) */}
+              {'safety' in course.modules && course.modules.safety && (
                 <div className="mb-6 lg:mb-8">
                   <h3 className="text-lg lg:text-xl font-semibold text-blue-800 mb-4 flex items-center">
                     <Shield className="h-5 w-5 mr-2" />
                     {t('courseDetail.aircraftSafety')}
                   </h3>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
-                    {course.modules.safety.map((module, index) => (
+                    {course.modules.safety.map((module: string, index: number) => (
                       <div key={index} className="flex items-start">
                         <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
                         <span className="text-sm lg:text-base text-gray-700 leading-relaxed">{module}</span>
@@ -614,7 +638,7 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
             <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
               <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-6">{t('courseDetail.entryRequirements')}</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className={`grid gap-8 ${'physical' in course.requirements && course.requirements.physical ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'}`}>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('courseDetail.academicRequirements')}</h3>
                   <div className="space-y-2">
@@ -627,17 +651,19 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
                   </div>
                 </div>
                 
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('courseDetail.physicalRequirements')}</h3>
-                  <div className="space-y-2">
-                    {course.requirements.physical.map((req, index) => (
-                      <div key={index} className="flex items-center">
-                        <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
-                        <span className="text-gray-700">{req}</span>
-                      </div>
-                    ))}
+                {'physical' in course.requirements && course.requirements.physical && (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('courseDetail.physicalRequirements')}</h3>
+                    <div className="space-y-2">
+                      {course.requirements.physical.map((req: string, index: number) => (
+                        <div key={index} className="flex items-center">
+                          <CheckCircle className="h-4 w-4 text-green-500 mr-3 flex-shrink-0" />
+                          <span className="text-gray-700">{req}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
 

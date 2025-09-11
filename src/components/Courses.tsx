@@ -264,7 +264,7 @@ const Courses = ({ isStandalone = false }: CoursesProps) => {
                               className="flex items-center text-xs text-gray-700 hover:text-blue-700"
                             >
                               <span className="inline-block w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
-                              +{currentCourseData.features.length - 4} more features
+                              +{currentCourseData.features.length - 4} {t('mobile.moreFeatures')}
                             </button>
                           ) : (
                             <button
@@ -272,7 +272,7 @@ const Courses = ({ isStandalone = false }: CoursesProps) => {
                               onClick={() => setShowAllFeaturesMobile(false)}
                               className="text-xs text-blue-700 underline"
                             >
-                              Show less
+                              {t('mobile.showLess')}
                             </button>
                           )}
                         </div>

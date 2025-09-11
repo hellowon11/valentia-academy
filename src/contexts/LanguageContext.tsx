@@ -84,6 +84,8 @@ const translations = {
     'courseDetail.overview': 'Overview',
     'courseDetail.programmeModules': 'Programme Modules',
     'courseDetail.iataModules': 'IATA Modules',
+    'courseDetail.aviationEnglish': 'Aviation English',
+    'courseDetail.assessmentCertification': 'Assessment & Certification',
     'courseDetail.communicationSkills': 'Communication Skills',
     'courseDetail.styleAndImage': 'Style and Image',
     'courseDetail.aircraftSafety': 'Aircraft Safety',
@@ -150,7 +152,39 @@ const translations = {
     
     // Course Content - English
     'courses.english.subtitle': 'ICAO Level 4+ Certification Programme',
-    'courses.english.overview': 'Elevate your career aspirations with the IATA Airline Customer Service course, designed to prepare you for the dynamic world of aviation. This program equips you with the essential knowledge, skills, and attitude to provide outstanding customer service and create memorable passenger experiences.',
+    'courses.english.overview': 'Master aviation English communication with our specialized ICAO Level 4+ certification program. This comprehensive course focuses on aviation terminology, pronunciation, listening comprehension, and professional communication skills essential for international cabin crew operations.',
+    
+    // English Course Modules
+    'courses.english.modules.aviation.1': 'Aviation Terminology & Vocabulary',
+    'courses.english.modules.aviation.2': 'ICAO Standard Phraseology',
+    'courses.english.modules.aviation.3': 'Emergency Communication Procedures',
+    'courses.english.modules.aviation.4': 'Weather & Flight Information',
+    'courses.english.modules.communication.1': 'Pronunciation & Accent Training',
+    'courses.english.modules.communication.2': 'Listening Comprehension Skills',
+    'courses.english.modules.communication.3': 'Speaking & Presentation Skills',
+    'courses.english.modules.communication.4': 'Professional Interview Preparation',
+    'courses.english.modules.assessment.1': 'ICAO Level 4+ Assessment Preparation',
+    'courses.english.modules.assessment.2': 'Mock Examinations & Practice Tests',
+    'courses.english.modules.assessment.3': 'Individual Performance Evaluation',
+    'courses.english.modules.assessment.4': 'Certification & Documentation',
+    
+    // English Course Requirements
+    'requirements.english.academic.1': 'High school graduation certificate',
+    'requirements.english.academic.2': 'Trial Examination/Forecast Results',
+    
+    // English Course Career Opportunities
+    'career.english.1': 'Aviation English Instructor',
+    'career.english.2': 'ICAO Language Proficiency Examiner',
+    'career.english.3': 'Aviation Communication Specialist',
+    'career.english.4': 'Flight Operations Coordinator',
+    'career.english.5': 'Air Traffic Control Support',
+    'career.english.6': 'Aviation Training Consultant',
+    'career.english.7': 'International Airlines Communication',
+    'career.english.8': 'Aviation Safety Communication',
+    'career.english.9': 'Cabin Crew Language Trainer',
+    'career.english.10': 'Aviation Customer Service Specialist',
+    'career.english.11': 'Flight Dispatch Communication',
+    'career.english.12': 'Aviation Documentation Specialist',
     
     // Course Content - Basic
     'courses.basic.subtitle': 'Foundation Programme',
@@ -167,7 +201,7 @@ const translations = {
     // Entry Requirements
     'requirements.academic.1': 'High school graduation certificate',
     'requirements.academic.2': 'Trial Examination/Forecast Results',
-    'requirements.physical.1': '157 cm (female)',
+    'requirements.physical.1': '157cm (female)',
     'requirements.physical.2': '165cm (male)',
     
     // Career Opportunities
@@ -271,6 +305,10 @@ const translations = {
     'courseLevel.advanced': 'Advanced',
     'courseLevel.englishPlus': 'English Plus',
     'courseLevel.beginner': 'Beginner',
+    
+    // Mobile Features
+    'mobile.moreFeatures': 'more features',
+    'mobile.showLess': 'Show less',
     
     // Course Duration
     'courseDuration.1Year': '1 Year',
@@ -384,6 +422,8 @@ const translations = {
     'courseDetail.overview': '概述',
     'courseDetail.programmeModules': '课程模块',
     'courseDetail.iataModules': 'IATA模块',
+    'courseDetail.aviationEnglish': '航空英语',
+    'courseDetail.assessmentCertification': '评估与认证',
     'courseDetail.communicationSkills': '沟通技能',
     'courseDetail.styleAndImage': '形象与风格',
     'courseDetail.aircraftSafety': '空中飞机安全',
@@ -450,7 +490,39 @@ const translations = {
     
     // Course Content - English
     'courses.english.subtitle': 'ICAO 4+级认证课程',
-    'courses.english.overview': '通过IATA航空公司客户服务课程提升您的职业抱负，该课程旨在为您在充满活力的航空世界中做好准备。该课程为您提供提供卓越客户服务和创造难忘乘客体验所需的基本知识、技能和态度。',
+    'courses.english.overview': '通过我们专业的ICAO 4+级认证课程掌握航空英语沟通技能。这个综合课程专注于航空术语、发音、听力理解和专业沟通技能，这些技能对国际空乘运营至关重要。',
+    
+    // English Course Modules - Chinese
+    'courses.english.modules.aviation.1': '航空术语与词汇',
+    'courses.english.modules.aviation.2': 'ICAO标准用语',
+    'courses.english.modules.aviation.3': '紧急通信程序',
+    'courses.english.modules.aviation.4': '天气与航班信息',
+    'courses.english.modules.communication.1': '发音与口音训练',
+    'courses.english.modules.communication.2': '听力理解技能',
+    'courses.english.modules.communication.3': '口语与演讲技能',
+    'courses.english.modules.communication.4': '专业面试准备',
+    'courses.english.modules.assessment.1': 'ICAO 4+级评估准备',
+    'courses.english.modules.assessment.2': '模拟考试与练习测试',
+    'courses.english.modules.assessment.3': '个人表现评估',
+    'courses.english.modules.assessment.4': '认证与文件处理',
+    
+    // English Course Requirements - Chinese
+    'requirements.english.academic.1': '高中毕业证书',
+    'requirements.english.academic.2': '模拟考/预测成绩',
+    
+    // English Course Career Opportunities - Chinese
+    'career.english.1': '航空英语讲师',
+    'career.english.2': 'ICAO语言能力考官',
+    'career.english.3': '航空通信专家',
+    'career.english.4': '飞行运营协调员',
+    'career.english.5': '空中交通管制支持',
+    'career.english.6': '航空培训顾问',
+    'career.english.7': '国际航空公司通信',
+    'career.english.8': '航空安全通信',
+    'career.english.9': '空乘语言培训师',
+    'career.english.10': '航空客户服务专家',
+    'career.english.11': '飞行调度通信',
+    'career.english.12': '航空文件专家',
     
     // Course Content - Basic
     'courses.basic.subtitle': '基础课程',
@@ -466,7 +538,7 @@ const translations = {
     
     // Entry Requirements
     'requirements.academic.1': '高中毕业证书',
-    'requirements.academic.2': '试考/预测成绩',
+    'requirements.academic.2': '模拟考/预测成绩',
     'requirements.physical.1': '157厘米（女性）',
     'requirements.physical.2': '165厘米（男性）',
     
@@ -572,6 +644,10 @@ const translations = {
     'courseLevel.englishPlus': '英语提升',
     'courseLevel.beginner': '初级',
     
+    // Mobile Features - Chinese
+    'mobile.moreFeatures': '更多特色',
+    'mobile.showLess': '显示更少',
+    
     // Course Duration
     'courseDuration.1Year': '1年',
     'courseDuration.6Months': '6个月',
@@ -672,6 +748,8 @@ const translations = {
     'courseDetail.overview': '개요',
     'courseDetail.programmeModules': '프로그램 모듈',
     'courseDetail.iataModules': 'IATA 모듈',
+    'courseDetail.aviationEnglish': '항공 영어',
+    'courseDetail.assessmentCertification': '평가 및 인증',
     'courseDetail.communicationSkills': '의사소통 기술',
     'courseDetail.styleAndImage': '스타일 및 이미지',
     'courseDetail.aircraftSafety': '항공기 안전',
@@ -738,7 +816,39 @@ const translations = {
     
     // Course Content - English
     'courses.english.subtitle': 'ICAO 레벨 4+ 인증 프로그램',
-    'courses.english.overview': 'IATA 항공사 고객 서비스 과정으로 경력 포부를 높이세요. 이 과정은 역동적인 항공 세계에서 성공할 수 있도록 준비하도록 설계되었습니다. 이 프로그램은 뛰어난 고객 서비스를 제공하고 잊을 수 없는 승객 경험을 만드는 데 필요한 필수 지식, 기술 및 태도를 제공합니다.',
+    'courses.english.overview': '전문 ICAO 레벨 4+ 인증 프로그램으로 항공 영어 커뮤니케이션을 마스터하세요. 이 종합 과정은 국제 객실승무원 운영에 필수적인 항공 용어, 발음, 청취 이해 및 전문 커뮤니케이션 기술에 중점을 둡니다.',
+    
+    // English Course Modules - Korean
+    'courses.english.modules.aviation.1': '항공 용어 및 어휘',
+    'courses.english.modules.aviation.2': 'ICAO 표준 용어',
+    'courses.english.modules.aviation.3': '비상 통신 절차',
+    'courses.english.modules.aviation.4': '날씨 및 항공 정보',
+    'courses.english.modules.communication.1': '발음 및 억양 훈련',
+    'courses.english.modules.communication.2': '청취 이해 기술',
+    'courses.english.modules.communication.3': '말하기 및 프레젠테이션 기술',
+    'courses.english.modules.communication.4': '전문 면접 준비',
+    'courses.english.modules.assessment.1': 'ICAO 레벨 4+ 평가 준비',
+    'courses.english.modules.assessment.2': '모의 시험 및 연습 테스트',
+    'courses.english.modules.assessment.3': '개인 성과 평가',
+    'courses.english.modules.assessment.4': '인증 및 문서 처리',
+    
+    // English Course Requirements - Korean
+    'requirements.english.academic.1': '고등학교 졸업증명서',
+    'requirements.english.academic.2': '모의고사/예상 성적',
+    
+    // English Course Career Opportunities - Korean
+    'career.english.1': '항공 영어 강사',
+    'career.english.2': 'ICAO 언어 능력 시험관',
+    'career.english.3': '항공 통신 전문가',
+    'career.english.4': '항공 운항 조정자',
+    'career.english.5': '항공 교통 관제 지원',
+    'career.english.6': '항공 훈련 컨설턴트',
+    'career.english.7': '국제 항공사 통신',
+    'career.english.8': '항공 안전 통신',
+    'career.english.9': '객실승무원 언어 훈련사',
+    'career.english.10': '항공 고객 서비스 전문가',
+    'career.english.11': '항공 운항 통신',
+    'career.english.12': '항공 문서 전문가',
     
     // Course Content - Basic
     'courses.basic.subtitle': '기초 프로그램',
@@ -860,6 +970,10 @@ const translations = {
     'courseLevel.englishPlus': '영어 플러스',
     'courseLevel.beginner': '초급',
     
+    // Mobile Features - Korean
+    'mobile.moreFeatures': '더 많은 기능',
+    'mobile.showLess': '간략히 보기',
+    
     // Course Duration
     'courseDuration.1Year': '1년',
     'courseDuration.6Months': '6개월',
@@ -960,6 +1074,8 @@ const translations = {
     'courseDetail.overview': '概要',
     'courseDetail.programmeModules': 'プログラムモジュール',
     'courseDetail.iataModules': 'IATAモジュール',
+    'courseDetail.aviationEnglish': '航空英語',
+    'courseDetail.assessmentCertification': '評価と認証',
     'courseDetail.communicationSkills': 'コミュニケーションスキル',
     'courseDetail.styleAndImage': 'スタイルとイメージ',
     'courseDetail.aircraftSafety': '航空機安全',
@@ -1026,7 +1142,39 @@ const translations = {
     
     // Course Content - English
     'courses.english.subtitle': 'ICAOレベル4+認証プログラム',
-    'courses.english.overview': 'IATA航空会社顧客サービスコースでキャリアの志を高めましょう。このコースは、ダイナミックな航空世界で成功するための準備をするように設計されています。このプログラムは、卓越した顧客サービスを提供し、忘れられない乗客体験を作り出すために必要な基本的な知識、スキル、態度を提供します。',
+    'courses.english.overview': '専門的なICAOレベル4+認証プログラムで航空英語コミュニケーションをマスターしましょう。この包括的なコースは、国際客室乗務員業務に不可欠な航空用語、発音、リスニング理解、専門コミュニケーションスキルに焦点を当てています。',
+    
+    // English Course Modules - Japanese
+    'courses.english.modules.aviation.1': '航空用語と語彙',
+    'courses.english.modules.aviation.2': 'ICAO標準用語',
+    'courses.english.modules.aviation.3': '緊急通信手順',
+    'courses.english.modules.aviation.4': '天気とフライト情報',
+    'courses.english.modules.communication.1': '発音とアクセント訓練',
+    'courses.english.modules.communication.2': 'リスニング理解スキル',
+    'courses.english.modules.communication.3': 'スピーキングとプレゼンテーションスキル',
+    'courses.english.modules.communication.4': '専門面接準備',
+    'courses.english.modules.assessment.1': 'ICAOレベル4+評価準備',
+    'courses.english.modules.assessment.2': '模擬試験と練習テスト',
+    'courses.english.modules.assessment.3': '個人パフォーマンス評価',
+    'courses.english.modules.assessment.4': '認証と文書処理',
+    
+    // English Course Requirements - Japanese
+    'requirements.english.academic.1': '高校卒業証明書',
+    'requirements.english.academic.2': '模擬試験/予想成績',
+    
+    // English Course Career Opportunities - Japanese
+    'career.english.1': '航空英語講師',
+    'career.english.2': 'ICAO言語能力試験官',
+    'career.english.3': '航空通信スペシャリスト',
+    'career.english.4': 'フライト運航コーディネーター',
+    'career.english.5': '航空交通管制サポート',
+    'career.english.6': '航空訓練コンサルタント',
+    'career.english.7': '国際航空会社通信',
+    'career.english.8': '航空安全通信',
+    'career.english.9': '客室乗務員言語トレーナー',
+    'career.english.10': '航空カスタマーサービススペシャリスト',
+    'career.english.11': 'フライトディスパッチ通信',
+    'career.english.12': '航空文書スペシャリスト',
     
     // Course Content - Basic
     'courses.basic.subtitle': '基礎プログラム',
@@ -1147,6 +1295,10 @@ const translations = {
     'courseLevel.advanced': '上級',
     'courseLevel.englishPlus': '英語プラス',
     'courseLevel.beginner': '初級',
+    
+    // Mobile Features - Japanese
+    'mobile.moreFeatures': 'その他の機能',
+    'mobile.showLess': '簡潔表示',
     
     // Course Duration
     'courseDuration.1Year': '1年間',
