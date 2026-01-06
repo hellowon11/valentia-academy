@@ -522,3 +522,6 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   console.log(`Supabase Connected: ${!!process.env.SUPABASE_URL}`);
 });
+
+module.exports = app;
+
