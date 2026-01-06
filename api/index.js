@@ -23,9 +23,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Debug/Health Check Endpoint
 app.get('/api', (req, res) => {
+  const url = process.env.SUPABASE_URL || '';
   res.json({ 
     status: 'ok', 
     message: 'Valentia Backend is Running',
+    connectedTo: url.substring(0, 30) + '...', // Show partial URL to verify project ID
+    keyLength: process.env.SUPABASE_SERVICE_KEY ? process.env.SUPABASE_SERVICE_KEY.length : 0,
     env: {
       supabaseConfigured: !!process.env.SUPABASE_URL
     }
