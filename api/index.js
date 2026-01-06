@@ -104,7 +104,7 @@ app.post('/api/application', upload.array('attachments'), async (req, res) => {
     console.log('📝 New Application:', name, email);
 
     // 2. Insert into Supabase
-    const { data: appData, error: appError } = await supabase
+    const insertResult = await supabase
       .from('valentia_applications')
       .insert([{
         full_name: name,
@@ -119,8 +119,16 @@ app.post('/api/application', upload.array('attachments'), async (req, res) => {
       .select()
       .single();
 
-    if (appError) throw appError;
+    console.log('🔍 Supabase Insert Result:', JSON.stringify(insertResult));
 
+    const { data: appData, error: appError } = insertResult;
+
+    if (appError) {
+      console.error('❌ Database Insert Error:', appError);
+      throw appError;
+    }
+
+    console.log('✅ Database Insert Success, ID:', appData.id);
     const appId = appData.id;
 
     // 3. Handle File Uploads
