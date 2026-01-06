@@ -13,6 +13,34 @@ const Contact = () => {
     message: '',
     course: ''
   });
+  const [countryCode, setCountryCode] = useState('+60');
+  
+  const countryCodes = [
+    { code: '+60', country: 'MY', name: 'Malaysia' },
+    { code: '+65', country: 'SG', name: 'Singapore' },
+    { code: '+86', country: 'CN', name: 'China' },
+    { code: '+886', country: 'TW', name: 'Taiwan' },
+    { code: '+852', country: 'HK', name: 'Hong Kong' },
+    { code: '+81', country: 'JP', name: 'Japan' },
+    { code: '+82', country: 'KR', name: 'South Korea' },
+    { code: '+62', country: 'ID', name: 'Indonesia' },
+    { code: '+66', country: 'TH', name: 'Thailand' },
+    { code: '+84', country: 'VN', name: 'Vietnam' },
+    { code: '+63', country: 'PH', name: 'Philippines' },
+    { code: '+91', country: 'IN', name: 'India' },
+    { code: '+61', country: 'AU', name: 'Australia' },
+    { code: '+64', country: 'NZ', name: 'New Zealand' },
+    { code: '+44', country: 'GB', name: 'UK' },
+    { code: '+1', country: 'US', name: 'USA/Canada' },
+    { code: '+33', country: 'FR', name: 'France' },
+    { code: '+49', country: 'DE', name: 'Germany' },
+    { code: '+39', country: 'IT', name: 'Italy' },
+    { code: '+34', country: 'ES', name: 'Spain' },
+    { code: '+971', country: 'AE', name: 'UAE' },
+    { code: '+966', country: 'SA', name: 'Saudi Arabia' },
+    { code: '+974', country: 'QA', name: 'Qatar' },
+  ];
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
@@ -33,6 +61,31 @@ const Contact = () => {
     }
   };
 
+  // Email validation helper
+  const validateEmail = (email: string) => {
+    if (!email.trim()) return 'Email is required';
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(email)) return 'Please enter a valid email address (e.g. name@example.com)';
+    if (!email.toLowerCase().endsWith('.com')) return 'Email address must end with .com';
+    return '';
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'email') {
+      const error = validateEmail(value);
+      if (error) {
+        setErrors(prev => ({ ...prev, email: error }));
+      } else {
+        setErrors(prev => {
+          const newErrors = { ...prev };
+          delete newErrors.email;
+          return newErrors;
+        });
+      }
+    }
+  };
+
   const validateForm = () => {
     const newErrors: {[key: string]: string} = {};
     
@@ -40,14 +93,8 @@ const Contact = () => {
       newErrors.name = 'Name is required';
     }
     
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
-    } else if (!formData.email.toLowerCase().endsWith('.com')) {
-      // Enforce .com domains per requirement
-      newErrors.email = t('validation.emailDotCom');
-    }
+    const emailError = validateEmail(formData.email);
+    if (emailError) newErrors.email = emailError;
     
     if (!formData.message.trim()) {
       newErrors.message = t('validation.messageRequired');
@@ -67,6 +114,7 @@ const Contact = () => {
       try {
         const emailData: ContactFormData = {
           ...formData,
+          phone: `${countryCode} ${formData.phone}`,
           language: language
         };
         
@@ -240,19 +288,40 @@ const Contact = () => {
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                       {t('contact.form.email')} *
                     </label>
+                    <div className="relative">
                     <input
                       type="email"
                       id="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
+                        onBlur={handleBlur}
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                        errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                          errors.email 
+                            ? 'border-red-300 bg-red-50 pr-10' 
+                            : formData.email && !validateEmail(formData.email)
+                              ? 'border-green-300 bg-green-50 pr-10'
+                              : 'border-gray-300'
                       }`}
                       placeholder={t('contact.form.email.placeholder')}
                     />
+                      {/* Validation Icons */}
+                      {formData.email && (
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                          {errors.email ? (
+                            <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                            </svg>
+                          ) : !validateEmail(formData.email) ? (
+                            <svg className="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                          ) : null}
+                        </div>
+                      )}
+                    </div>
                     {errors.email && (
-                      <div className="flex items-center mt-1 text-red-600 text-sm">
+                      <div className="flex items-center mt-1 text-red-600 text-sm animate-pulse">
                         <AlertCircle className="h-4 w-4 mr-1" />
                         {errors.email}
                       </div>
@@ -265,15 +334,28 @@ const Contact = () => {
                     <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                       {t('contact.form.phone')}
                     </label>
+                    <div className="flex">
+                      <select
+                        value={countryCode}
+                        onChange={(e) => setCountryCode(e.target.value)}
+                        className="w-28 px-2 py-3 border border-r-0 border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 text-sm"
+                      >
+                        {countryCodes.map((country) => (
+                          <option key={country.code} value={country.code}>
+                            {country.country} ({country.code})
+                          </option>
+                        ))}
+                      </select>
                     <input
                       type="tel"
                       id="phone"
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                      placeholder={t('contact.form.phone.placeholder')}
+                        className="flex-1 w-full px-4 py-3 border rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors border-gray-300"
+                        placeholder="123456789"
                     />
+                    </div>
                   </div>
 
                   <div>

@@ -48,10 +48,48 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
     course: '',
     message: ''
   });
+  const [countryCode, setCountryCode] = useState('+60');
   const [attachments, setAttachments] = useState<File[]>([]);
+
+  const countryCodes = [
+    { code: '+60', country: 'MY', name: 'Malaysia' },
+    { code: '+65', country: 'SG', name: 'Singapore' },
+    { code: '+86', country: 'CN', name: 'China' },
+    { code: '+886', country: 'TW', name: 'Taiwan' },
+    { code: '+852', country: 'HK', name: 'Hong Kong' },
+    { code: '+81', country: 'JP', name: 'Japan' },
+    { code: '+82', country: 'KR', name: 'South Korea' },
+    { code: '+62', country: 'ID', name: 'Indonesia' },
+    { code: '+66', country: 'TH', name: 'Thailand' },
+    { code: '+84', country: 'VN', name: 'Vietnam' },
+    { code: '+63', country: 'PH', name: 'Philippines' },
+    { code: '+91', country: 'IN', name: 'India' },
+    { code: '+61', country: 'AU', name: 'Australia' },
+    { code: '+64', country: 'NZ', name: 'New Zealand' },
+    { code: '+44', country: 'GB', name: 'UK' },
+    { code: '+1', country: 'US', name: 'USA/Canada' },
+    { code: '+33', country: 'FR', name: 'France' },
+    { code: '+49', country: 'DE', name: 'Germany' },
+    { code: '+39', country: 'IT', name: 'Italy' },
+    { code: '+34', country: 'ES', name: 'Spain' },
+    { code: '+971', country: 'AE', name: 'UAE' },
+    { code: '+966', country: 'SA', name: 'Saudi Arabia' },
+    { code: '+974', country: 'QA', name: 'Qatar' },
+  ];
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
   const [appErrors, setAppErrors] = useState<{[key: string]: string}>({});
+
+  // Email validation helper
+  const validateEmail = (email: string) => {
+    if (!email.trim()) return 'Email is required';
+    // 更严格的 Email 正则
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(email)) return 'Please enter a valid email address (e.g. name@example.com)';
+    // 检查是否以 .com 结尾
+    if (!email.toLowerCase().endsWith('.com')) return 'Email address must end with .com';
+    return '';
+  };
 
   const handleApplicationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,13 +98,11 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
     // Basic validation with .com email enforcement
     const errors: {[key: string]: string} = {};
     if (!applicationData.name.trim()) errors.name = 'Name is required';
-    if (!applicationData.email.trim()) {
-      errors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(applicationData.email)) {
-      errors.email = 'Please enter a valid email';
-    } else if (!applicationData.email.toLowerCase().endsWith('.com')) {
-      errors.email = t('validation.emailDotCom');
-    }
+    
+    // Use helper for email validation
+    const emailError = validateEmail(applicationData.email);
+    if (emailError) errors.email = emailError;
+
     if (!applicationData.phone.trim()) errors.phone = 'Phone is required';
     if (!applicationData.course.trim()) errors.course = 'Course is required';
 
@@ -83,7 +119,8 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
       const formData = new FormData();
       formData.append('name', applicationData.name);
       formData.append('email', applicationData.email);
-      formData.append('phone', applicationData.phone);
+      // Combine country code and phone number
+      formData.append('phone', `${countryCode} ${applicationData.phone}`);
       formData.append('course', applicationData.course);
       formData.append('message', applicationData.message);
       formData.append('language', language); // 根据当前语言设置
@@ -108,6 +145,7 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
           setShowApplicationForm(false);
           setSubmitMessage('');
           setApplicationData({ name: '', email: '', phone: '', course: '', message: '' });
+          setCountryCode('+60');
           setAttachments([]);
         }, 2000);
       } else {
@@ -129,6 +167,23 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
     // Clear error when user edits
     if (appErrors[name]) {
       setAppErrors({ ...appErrors, [name]: '' });
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'email') {
+      const error = validateEmail(value);
+      if (error) {
+        setAppErrors(prev => ({ ...prev, email: error }));
+      } else {
+        // Clear error if valid
+        setAppErrors(prev => {
+          const newErrors = { ...prev };
+          delete newErrors.email;
+          return newErrors;
+        });
+      }
     }
   };
 
@@ -773,19 +828,43 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('contact.form.email')} *
                 </label>
+                <div className="relative">
                 <input
                   type="email"
                   name="email"
                   value={applicationData.email}
                   onChange={handleInputChange}
+                    onBlur={handleBlur}
                   required
                   className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                    appErrors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                      appErrors.email 
+                        ? 'border-red-300 bg-red-50 pr-10' 
+                        : applicationData.email && !validateEmail(applicationData.email) 
+                          ? 'border-green-300 bg-green-50 pr-10' 
+                          : 'border-gray-300'
                   }`}
                   placeholder={t('contact.form.email.placeholder')}
                 />
+                  {/* Validation Icons */}
+                  {applicationData.email && (
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                      {appErrors.email ? (
+                        <svg className="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                      ) : !validateEmail(applicationData.email) ? (
+                        <svg className="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      ) : null}
+                    </div>
+                  )}
+                </div>
                 {appErrors.email && (
-                  <div className="flex items-center mt-1 text-red-600 text-sm">{appErrors.email}</div>
+                  <div className="flex items-center mt-1 text-red-600 text-sm animate-pulse">
+                    <span className="mr-1">⚠️</span>
+                    {appErrors.email}
+                  </div>
                 )}
               </div>
 
@@ -793,17 +872,30 @@ const CourseDetail = ({ courseId, onBack, onCourseSelect }: CourseDetailProps) =
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   {t('contact.form.phone')} *
                 </label>
+                <div className="flex">
+                  <select
+                    value={countryCode}
+                    onChange={(e) => setCountryCode(e.target.value)}
+                    className="w-28 px-2 py-2 border border-r-0 border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 text-sm"
+                  >
+                    {countryCodes.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        {country.country} ({country.code})
+                      </option>
+                    ))}
+                  </select>
                 <input
                   type="tel"
                   name="phone"
                   value={applicationData.phone}
                   onChange={handleInputChange}
                   required
-                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                    className={`flex-1 w-full px-3 py-2 border rounded-r-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
                     appErrors.phone ? 'border-red-300 bg-red-50' : 'border-gray-300'
                   }`}
-                  placeholder={t('contact.form.phone.placeholder')}
+                    placeholder="123456789"
                 />
+                </div>
                 {appErrors.phone && (
                   <div className="flex items-center mt-1 text-red-600 text-sm">{appErrors.phone}</div>
                 )}

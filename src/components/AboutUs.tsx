@@ -51,8 +51,8 @@ const AboutUs: React.FC<AboutUsProps> = ({ isStandalone = false }) => {
           <div className="relative">
             <div className="relative z-10">
               <img
-                src="https://images.pexels.com/photos/2026324/pexels-photo-2026324.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Training Facility"
+                src="/images/valentia-intro picture.png"
+                alt="Valentia Academy Campus"
                 className={`rounded-2xl shadow-2xl object-cover w-full ${isStandalone ? 'h-[600px]' : 'h-[500px]'}`}
               />
             </div>

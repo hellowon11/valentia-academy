@@ -10,6 +10,9 @@ import FloatingWhatsApp from './components/FloatingWhatsApp';
 import CourseDetail from './components/CourseDetail';
 import PlaneAnimation from './components/PlaneAnimation';
 import { LanguageProvider } from './contexts/LanguageContext';
+import AdminLogin from './pages/Admin/Login';
+import AdminDashboard from './pages/Admin/Dashboard';
+import ApplicationDetail from './pages/Admin/ApplicationDetail';
 
 function App() {
   const [activeSection, setActiveSection] = useState('home');
@@ -28,6 +31,11 @@ function App() {
   // Handle URL routing and browser history
   useEffect(() => {
     const path = window.location.pathname;
+    
+    // Skip admin routes
+    if (path.startsWith('/admin')) {
+      return;
+    }
     
     // Handle course detail pages
     if (path.startsWith('/course/')) {
@@ -166,6 +174,18 @@ function App() {
     // Scroll to top of page when navigating to a new section
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Handle admin routes
+  const path = window.location.pathname;
+  if (path === '/admin/login') {
+    return <AdminLogin />;
+  }
+  if (path.startsWith('/admin/applications/') && path !== '/admin/applications/') {
+    return <ApplicationDetail />;
+  }
+  if (path === '/admin/dashboard' || path.startsWith('/admin')) {
+    return <AdminDashboard />;
+  }
 
   return (
     <LanguageProvider>
