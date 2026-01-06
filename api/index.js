@@ -21,6 +21,17 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Debug/Health Check Endpoint
+app.get('/api', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    message: 'Valentia Backend is Running',
+    env: {
+      supabaseConfigured: !!process.env.SUPABASE_URL
+    }
+  });
+});
+
 // Keep-alive endpoint for Supabase
 app.get('/api/ping', async (req, res) => {
   try {
