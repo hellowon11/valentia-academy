@@ -4,43 +4,19 @@ const { createClient } = require('@supabase/supabase-js');
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
 
-let supabase;
-
 if (!supabaseUrl || !supabaseKey) {
-  console.error('❌ Supabase Env Vars Missing');
-  // Create a dummy client to prevent crash during import
-  const mockError = { error: { message: 'Backend Configuration Error: Missing SUPABASE_URL or SUPABASE_SERVICE_KEY in Vercel Settings' }, data: null };
-  const mockChain = () => ({ 
-    select: () => Promise.resolve(mockError),
-    insert: () => Promise.resolve(mockError),
-    update: () => Promise.resolve(mockError),
-    delete: () => Promise.resolve(mockError),
-    eq: () => mockChain(),
-    single: () => Promise.resolve(mockError),
-    limit: () => mockChain(),
-    order: () => mockChain(),
-    in: () => mockChain()
-  });
-
-  supabase = {
-    from: () => mockChain(),
-    storage: {
-      from: () => ({
-        upload: () => Promise.resolve(mockError),
-        createSignedUrl: () => Promise.resolve(mockError),
-        remove: () => Promise.resolve(mockError)
-      })
-    },
-    _initError: true
-  };
-} else {
-  // Valid Initialization
-  supabase = createClient(supabaseUrl, supabaseKey, {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false
-    }
-  });
+  // CRITICAL: Throw error to fail fast if env vars are missing
+  // This will cause a 500 error, which is better than a silent failure
+  throw new Error(`Missing Supabase Configuration! URL: ${!!supabaseUrl}, Key: ${!!supabaseKey}`);
 }
+
+console.log('✅ Initializing Supabase with URL:', supabaseUrl);
+
+const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
+});
 
 module.exports = supabase;
