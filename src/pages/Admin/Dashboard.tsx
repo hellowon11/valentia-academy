@@ -86,7 +86,7 @@ const Dashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/admin/dashboard/stats', {
+      const response = await fetch('/api/admin/stats', {
         headers: getAuthHeaders()
       });
 
