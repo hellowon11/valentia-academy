@@ -519,6 +519,18 @@ app.get('/api/admin/applications/export/excel', authenticateToken, async (req, r
 });
 
 // Export for Vercel Serverless
+// Global Error Handler for Vercel Debugging
+app.use((err, req, res, next) => {
+  console.error('🔥 Unhandled Error:', err);
+  // Send error details to client for easier debugging
+  res.status(500).json({ 
+    success: false, 
+    message: 'Internal Server Error',
+    error: err.message,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
+});
+
 module.exports = app;
 
 // Only listen when running locally
